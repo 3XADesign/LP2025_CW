@@ -11,10 +11,10 @@
 </head>
 <body class="container mt-5">
 
-    <h2 class="text-center mb-4">🔒 Encriptador y Desencriptador de Texto ULTASEGURO🔒</h2>
+    <h2 class="text-center mb-4">🔒 Encriptador y Desencriptador de Texto ULTRASEGURO 🔓</h2>
 
     <div class="row">
-        <!-- Secci贸n izquierda: Encriptar -->
+        <!-- Sección izquierda: Encriptar -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
@@ -37,7 +37,7 @@
                         <label for="encryptedText" class="form-label">Texto Encriptado:</label>
                         <textarea id="encryptedText" class="form-control" readonly></textarea>
                     </div>
-                    <!-- Bot贸n para mostrar el salt -->
+                    <!-- Botón para mostrar el salt -->
                     <div class="mt-3">
                         <button class="btn btn-info" type="button" id="toggleSalt">
                             Mostrar Salt
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <!-- Secci贸n derecha: Desencriptar -->
+        <!-- Sección derecha: Desencriptar -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
@@ -66,17 +66,17 @@
                         <label for="encryptedTextToDecrypt" class="form-label">Texto Encriptado:</label>
                         <textarea id="encryptedTextToDecrypt" class="form-control"></textarea>
                     </div>
-                    <!-- Campo y bot贸n para el salt en la secci贸n derecha -->
-                    <div class="mb-3">
-                        <button class="btn btn-info" type="button" id="toggleDecryptSalt">
-                            Mostrar Salt
-                        </button>
-                        <input type="text" id="decryptSalt" class="form-control mt-2" style="display: none;">
-                    </div>
                     <button class="btn btn-success" onclick="decryptText()">Desencriptar</button>
                     <div class="mt-3">
                         <label for="decryptedText" class="form-label">Texto Desencriptado:</label>
                         <textarea id="decryptedText" class="form-control" readonly></textarea>
+                    </div>
+                    <!-- Botón para mostrar el salt -->
+                    <div class="mt-3">
+                        <button class="btn btn-info" type="button" id="toggleDecryptSalt">
+                            Mostrar Salt
+                        </button>
+                        <input type="text" id="decryptSalt" class="form-control mt-2" style="display: none;">
                     </div>
                 </div>
             </div>

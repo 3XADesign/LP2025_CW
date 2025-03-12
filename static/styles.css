@@ -1,0 +1,22 @@
+body {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+#togglePassword {
+    cursor: pointer;
+}

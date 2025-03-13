@@ -8,11 +8,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <!-- Iconos de FontAwesome para el ojo -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fuente Poppins de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='img/favicon.jpg') }}"/>
 </head>
 <body class="container mt-5">
 
-    <h2 class="text-center mb-4">🔒 Encriptador y Desencriptador de Texto ULTRASEGURO 🔓</h2>
-
+    <!-- Hero Section -->
+    <header>
+        <div class="hero">
+            <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Logo de Cifrado" class="logo" width="100px"> <!--Imagen de portada-->
+            <p style="text-align: center;"><strong>¿Cómo funciona? </strong><br><br> Esta herramienta te permite encriptar y desencriptar texto de forma segura. Simplemente ingresa una contraseña y el texto que deseas encriptar. Para desencriptar, usa la misma contraseña y el texto encriptado. En caso de que lo recivas de forma externa tendras que poner el Salt también</p>
+        </div>
+    </header>
+    <div class="hero-text" style="text-align: center;">
+        <h1>Encriptador Web ULTRASEGURO</h1>
+        <p>Protege tus mensajes con la mejor tecnología de encriptación.</p><br>
+    </div>
     <div class="row">
         <!-- Sección izquierda: Encriptar -->
         <div class="col-md-6">
@@ -22,15 +34,26 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña:</label>
                         <div class="input-group">
-                            <input type="password" id="password" class="form-control">
+                            <input type="password" id="password" class="form-control" maxlength="20">
                             <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        <div class="text-end mt-1">
+                            <small class="text-muted" id="passwordCounter">0/20</small>
+                        </div>
+                        <!-- Barra de seguridad de contraseña -->
+                        <div class="strength-bar mt-2">
+                            <div id="passwordStrengthIndicator"></div>
+                        </div>
+                        <small id="passwordStrengthText" class="form-text"></small>
                     </div>
                     <div class="mb-3">
                         <label for="text" class="form-label">Texto a Encriptar:</label>
-                        <textarea id="text" class="form-control"></textarea>
+                        <textarea id="text" class="form-control" maxlength="500"></textarea>
+                        <div class="text-end mt-1">
+                            <small class="text-muted" id="textCounter">0/500</small>
+                        </div>
                     </div>
                     <button class="btn btn-primary" onclick="encryptText()">Encriptar</button>
                     <div class="mt-3">
@@ -42,7 +65,7 @@
                         <button class="btn btn-info" type="button" id="toggleSalt">
                             Mostrar Salt
                         </button>
-                        <input type="text" id="salt" class="form-control mt-2" readonly style="display: none;">
+                        <input type="text" id="salt" class="form-control mt-2" readonly>
                     </div>
                 </div>
             </div>
@@ -56,15 +79,27 @@
                     <div class="mb-3">
                         <label for="decryptPassword" class="form-label">Contraseña:</label>
                         <div class="input-group">
-                            <input type="password" id="decryptPassword" class="form-control">
+                            <input type="password" id="decryptPassword" class="form-control" maxlength="20">
                             <button class="btn btn-outline-secondary" type="button" id="toggleDecryptPassword">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        <div class="text-end mt-1">
+                            <small class="text-muted" id="decryptPasswordCounter">0/20</small>
+                        </div>
+                        <!-- Barra de seguridad de contraseña -->
+                        <div class="strength-bar mt-2">
+                            <div id="decryptPasswordStrengthIndicator"></div>
+                        </div>
+                        <small id="decryptPasswordStrengthText" class="form-text"></small>
                     </div>
                     <div class="mb-3">
                         <label for="encryptedTextToDecrypt" class="form-label">Texto Encriptado:</label>
                         <textarea id="encryptedTextToDecrypt" class="form-control"></textarea>
+                        <!-- Contador fantasma para mantener la simetría -->
+                        <div class="text-end mt-1">
+                            <small class="text-muted" style="visibility: hidden;">0/500</small>
+                        </div>
                     </div>
                     <button class="btn btn-success" onclick="decryptText()">Desencriptar</button>
                     <div class="mt-3">
@@ -76,12 +111,19 @@
                         <button class="btn btn-info" type="button" id="toggleDecryptSalt">
                             Mostrar Salt
                         </button>
-                        <input type="text" id="decryptSalt" class="form-control mt-2" style="display: none;">
+                        <input type="text" id="decryptSalt" class="form-control mt-2">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer">
+            <p>&copy; 2025 MOUNTAIN encryption. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

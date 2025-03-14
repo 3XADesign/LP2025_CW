@@ -115,7 +115,25 @@
         </div>
     </div>
 
-    <div class="hero-text" style="text-align: center;">
+    <!-- Historial de Encriptaciones -->
+    <div class="container mt-5" style="text-align: center;">
+        <h2 class="text-center">Historial de Encriptaciones</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Texto Original</th>
+                    <th>Texto Encriptado</th>
+                    <th>Salt</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody id="encryptionHistory">
+                <!-- Las filas se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="hero-text" style="text-align: center; background-color: rgba(255, 255, 255, 0.7);">
         <p style="text-align: center;"><strong>¿Cómo funciona? </strong><br><br> Esta herramienta te permite encriptar y desencriptar texto de forma segura. Simplemente ingresa una contraseña y el texto que deseas encriptar. Para desencriptar, usa la misma contraseña y el texto encriptado. En caso de que lo recibas de forma externa tendras que poner el Salt también.</p>
     </div>
 

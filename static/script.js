@@ -49,10 +49,10 @@ document.getElementById('toggleDecryptPassword').addEventListener('click', funct
     }
 });
 
-// Función para mostrar/ocultar el salt en la sección izquierda
+// Función para mostrar/ocultar el Salt en la sección izquierda
 document.getElementById('toggleSalt').addEventListener('click', function () {
     const saltInput = document.getElementById('salt');
-    if (saltInput.style.display === 'none') {
+    if (saltInput.style.display === 'none' || !saltInput.style.display) {
         saltInput.style.display = 'block';
         this.textContent = 'Ocultar Salt';
     } else {
@@ -61,10 +61,10 @@ document.getElementById('toggleSalt').addEventListener('click', function () {
     }
 });
 
-// Función para mostrar/ocultar el salt en la sección derecha
+// Función para mostrar/ocultar el Salt en la sección derecha
 document.getElementById('toggleDecryptSalt').addEventListener('click', function () {
     const saltInput = document.getElementById('decryptSalt');
-    if (saltInput.style.display === 'none') {
+    if (saltInput.style.display === 'none' || !saltInput.style.display) {
         saltInput.style.display = 'block';
         this.textContent = 'Ocultar Salt';
     } else {
@@ -145,25 +145,28 @@ document.getElementById('decryptPassword').addEventListener('input', function ()
 
 // Función para encriptar
 async function encryptText() {
-    let password = document.getElementById("password").value;
-    let text = document.getElementById("text").value;
+    const password = document.getElementById('password').value;
+    const text = document.getElementById('text').value;
 
     if (!password || !text) {
         alert("Por favor, ingrese la contraseña y el texto.");
         return;
     }
 
-    let response = await fetch('/encrypt', {
+    const response = await fetch('/encrypt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password, text })
     });
 
-    let data = await response.json();
+    const data = await response.json();
     if (data.encrypted_text) {
-        document.getElementById("encryptedText").value = data.encrypted_text;
-        document.getElementById("salt").value = data.salt;  // Guardar el salt en la sección izquierda
-        document.getElementById("decryptSalt").value = data.salt;  // Copiar el salt a la sección derecha
+        document.getElementById('encryptedText').value = data.encrypted_text;
+        document.getElementById('salt').value = data.salt; // Guardar el salt en la sección izquierda
+        document.getElementById('decryptSalt').value = data.salt; // Copiar el salt a la sección derecha
+
+        // Llamar a la función para agregar al historial
+        addToHistory(text, data.encrypted_text, data.salt);
     } else {
         alert("Error al encriptar.");
     }
@@ -171,25 +174,49 @@ async function encryptText() {
 
 // Función para desencriptar
 async function decryptText() {
-    let password = document.getElementById("decryptPassword").value;
-    let encryptedText = document.getElementById("encryptedTextToDecrypt").value;
-    let salt = document.getElementById("decryptSalt").value;
+    const password = document.getElementById('decryptPassword').value;
+    const encryptedText = document.getElementById('encryptedTextToDecrypt').value;
+    const salt = document.getElementById('decryptSalt').value;
 
     if (!password || !encryptedText || !salt) {
         alert("Por favor, ingrese la contraseña, el texto encriptado y el salt.");
         return;
     }
 
-    let response = await fetch('/decrypt', {
+    const response = await fetch('/decrypt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password, encrypted_text: encryptedText, salt })
     });
 
-    let data = await response.json();
+    const data = await response.json();
     if (data.decrypted_text) {
-        document.getElementById("decryptedText").value = data.decrypted_text;
+        document.getElementById('decryptedText').value = data.decrypted_text;
     } else {
         alert("Error al desencriptar. ¿Clave incorrecta?");
+    }
+}
+
+// Función para agregar el historial de encriptaciones
+function addToHistory(originalText, encryptedText, salt) {
+    const now = new Date();
+    const dateString = now.toLocaleString(); // Formato: DD/MM/YYYY, HH:MM:SS
+
+    // Crear una nueva fila para la tabla
+    const historyRow = `
+        <tr>
+            <td>${originalText}</td>
+            <td>${encryptedText}</td>
+            <td>${salt}</td>
+            <td>${dateString}</td>
+        </tr>
+    `;
+
+    // Agregar la fila al principio del cuerpo de la tabla
+    const historyTable = document.getElementById('encryptionHistory');
+    if (historyTable) {
+        historyTable.insertAdjacentHTML('afterbegin', historyRow); // Insertar al principio
+    } else {
+        console.error("No se encontró el elemento 'encryptionHistory'.");
     }
 }

@@ -19,7 +19,8 @@ function addToHistory(originalText, encryptedText, salt) {
                 <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('${encryptedText}')">
                     <i class="fas fa-copy"></i> Copiar Encriptado
                 </button>
-                <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('${salt}')">
+                <br> <!-- Salto de línea para separar los botones -->
+                <button class="btn btn-sm btn-outline-secondary mt-2" onclick="copyToClipboard('${salt}')">
                     <i class="fas fa-copy"></i> Copiar Salt
                 </button>
             </td>
@@ -126,3 +127,109 @@ async function decryptText() {
         alert("Error al desencriptar. ¿Clave incorrecta?");
     }
 }
+
+// Función para evaluar la fortaleza de la contraseña
+function evaluatePasswordStrength(password) {
+    let strength = 0;
+    if (password.length >= 8) strength += 1;
+    if (password.match(/[a-z]/)) strength += 1;
+    if (password.match(/[A-Z]/)) strength += 1;
+    if (password.match(/[0-9]/)) strength += 1;
+    if (password.match(/[^a-zA-Z0-9]/)) strength += 1;
+
+    return strength;
+}
+
+// Función para actualizar la barra de seguridad de la contraseña
+function updatePasswordStrength(password, strengthIndicator, strengthText) {
+    const strength = evaluatePasswordStrength(password);
+    const strengthLabels = ["Muy débil", "Débil", "Moderada", "Fuerte", "Muy fuerte"];
+    const strengthColors = ["#dc3545", "#ffc107", "#ffc107", "#28a745", "#28a745"];
+
+    strengthIndicator.style.width = `${(strength / 5) * 100}%`;
+    strengthIndicator.style.backgroundColor = strengthColors[strength];
+    strengthText.textContent = strengthLabels[strength];
+    strengthText.style.color = strengthColors[strength];
+}
+
+// Event listeners para actualizar la fortaleza de la contraseña
+document.getElementById('password').addEventListener('input', function() {
+    const password = this.value;
+    const strengthIndicator = document.getElementById('passwordStrengthIndicator');
+    const strengthText = document.getElementById('passwordStrengthText');
+    updatePasswordStrength(password, strengthIndicator, strengthText);
+});
+
+document.getElementById('decryptPassword').addEventListener('input', function() {
+    const password = this.value;
+    const strengthIndicator = document.getElementById('decryptPasswordStrengthIndicator');
+    const strengthText = document.getElementById('decryptPasswordStrengthText');
+    updatePasswordStrength(password, strengthIndicator, strengthText);
+});
+
+// Event listeners para actualizar los contadores de caracteres
+document.getElementById('password').addEventListener('input', function() {
+    const counter = document.getElementById('passwordCounter');
+    counter.textContent = `${this.value.length}/20`;
+});
+
+document.getElementById('text').addEventListener('input', function() {
+    const counter = document.getElementById('textCounter');
+    counter.textContent = `${this.value.length}/500`;
+});
+
+document.getElementById('decryptPassword').addEventListener('input', function() {
+    const counter = document.getElementById('decryptPasswordCounter');
+    counter.textContent = `${this.value.length}/20`;
+});
+
+// Función para mostrar/ocultar la contraseña
+function togglePasswordVisibility(inputId, buttonId) {
+    const input = document.getElementById(inputId);
+    const button = document.getElementById(buttonId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+        input.type = 'password';
+        button.innerHTML = '<i class="fas fa-eye"></i>';
+    }
+}
+
+// Event listeners para los botones de mostrar/ocultar contraseña
+document.getElementById('togglePassword').addEventListener('click', function() {
+    togglePasswordVisibility('password', 'togglePassword');
+});
+
+document.getElementById('toggleDecryptPassword').addEventListener('click', function() {
+    togglePasswordVisibility('decryptPassword', 'toggleDecryptPassword');
+});
+
+// Función para mostrar/ocultar el Salt
+function toggleSaltVisibility(inputId, buttonId) {
+    const input = document.getElementById(inputId);
+    const button = document.getElementById(buttonId);
+    if (input.style.display === 'none') {
+        input.style.display = 'block';
+        button.textContent = 'Ocultar Salt';
+    } else {
+        input.style.display = 'none';
+        button.textContent = 'Mostrar Salt';
+    }
+}
+
+// Event listeners para los botones de mostrar/ocultar Salt
+document.getElementById('toggleSalt').addEventListener('click', function() {
+    toggleSaltVisibility('salt', 'toggleSalt');
+});
+
+document.getElementById('toggleDecryptSalt').addEventListener('click', function() {
+    toggleSaltVisibility('decryptSalt', 'toggleDecryptSalt');
+});
+
+// Evitar que los enlaces de paginación desplacen la página hacia arriba
+document.getElementById('pagination').addEventListener('click', function(event) {
+    if (event.target.tagName === 'A') {
+        event.preventDefault(); // Evita que el navegador navegue a "#"
+    }
+});

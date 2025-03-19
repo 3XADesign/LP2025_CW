@@ -12,6 +12,7 @@ body {
     background-position: center; 
     background-repeat: no-repeat;
     background-attachment: fixed; /* Fondo fijo */
+    scroll-behavior: smooth; /* Desplazamiento suave */
 }
 
 /* Hero Section */
@@ -286,9 +287,12 @@ button:hover {
     }
 
     /* Botones de copiar en móviles */
+    /* Estilos para los botones de copiar en móviles */
     .btn-sm {
-        padding: 5px 10px;
-        font-size: 0.8rem;
+        white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+        overflow: hidden; /* Oculta el texto que se desborda */
+        text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es muy largo */
+        max-width: 100%; /* Asegura que el botón no se desborde */
     }
 
     /* Cambiar disposición de los botones de copiar en móviles */
@@ -297,6 +301,11 @@ button:hover {
         width: 100%;
         margin-bottom: 5px;
     }
+}
+
+/* Ajustes para la paginación */
+.pagination {
+    flex-wrap: wrap; /* Permite que los botones de paginación se ajusten en varias líneas */
 }
 
 td {

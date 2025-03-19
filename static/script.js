@@ -226,3 +226,10 @@ document.getElementById('toggleSalt').addEventListener('click', function() {
 document.getElementById('toggleDecryptSalt').addEventListener('click', function() {
     toggleSaltVisibility('decryptSalt', 'toggleDecryptSalt');
 });
+
+// Evitar que los enlaces de paginación desplacen la página hacia arriba
+document.getElementById('pagination').addEventListener('click', function(event) {
+    if (event.target.tagName === 'A') {
+        event.preventDefault(); // Evita que el navegador navegue a "#"
+    }
+});

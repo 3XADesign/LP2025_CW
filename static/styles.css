@@ -298,3 +298,26 @@ button:hover {
         margin-bottom: 5px;
     }
 }
+
+td {
+    max-width: 200px; /* Ajusta este valor según tus necesidades */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Estilos para la barra de seguridad de la contraseña */
+.strength-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#passwordStrengthIndicator,
+#decryptPasswordStrengthIndicator {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease;
+}

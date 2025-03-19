@@ -233,3 +233,43 @@ document.getElementById('pagination').addEventListener('click', function(event) 
         event.preventDefault(); // Evita que el navegador navegue a "#"
     }
 });
+
+
+// ---------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------- //
+// ANIMACIONES DE OCULTAR/VISIBLE //
+// JavaScript Document
+var elementosanimados,totalelementosanimados;
+function damecoordenadasuperior(x) {
+	coordenada=x.offsetTop;
+	while (x.offsetParent!==null) {
+		coordenada+=x.offsetParent.offsetTop;
+		x=x.offsetParent;
+	}
+	//alert(coordenada);
+	return coordenada;
+}
+window.onload=function() {
+	elementosanimados=document.querySelectorAll('.animado');
+	totalelementosanimados=elementosanimados.length;
+	miraaltura();
+	document.querySelector("main").classList.add("cargado");
+}
+
+window.onscroll=miraaltura;
+
+function miraaltura() {
+	for (let x=0; x<totalelementosanimados; x++) {
+		coordenada=damecoordenadasuperior(elementosanimados[x]);
+		//alert(coordenada);
+		if (coordenada+(window.innerHeight/5)<window.pageYOffset+window.innerHeight) {
+			elementosanimados[x].classList.add("dentro");
+		} else {
+			elementosanimados[x].classList.remove("dentro");
+		}
+	}
+}
+
+
+// ---------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------- //
